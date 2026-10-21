@@ -1,0 +1,66 @@
+{# Hazelchat plugin settings. Craft names every field settings[…]. #}
+{% import '_includes/forms.twig' as forms %}
+
+{% set signup = 'https://app.hazelchat.co/signup?utm_source=craft&utm_medium=plugin&utm_campaign=settings-signup' %}
+{% set login = 'https://app.hazelchat.co/login?utm_source=craft&utm_medium=plugin&utm_campaign=settings-login' %}
+
+<p>
+  {{ 'New to Hazelchat? Create a free account, add your website and copy its installation code, then paste it below and save.'|t('hazelchat') }}
+  <a href="{{ signup }}" target="_blank" rel="noopener noreferrer">{{ 'Create a free account'|t('hazelchat') }}</a>
+  · <a href="{{ login }}" target="_blank" rel="noopener noreferrer">{{ 'Log in'|t('hazelchat') }}</a>
+</p>
+
+{{ forms.autosuggestField({
+  label: 'Installation code'|t('hazelchat'),
+  instructions: 'Paste the installation code from Hazelchat.'|t('hazelchat'),
+  id: 'installationCode',
+  name: 'installationCode',
+  value: settings.installationCode,
+  suggestEnvVars: true,
+  placeholder: 'Paste the installation code'|t('hazelchat'),
+  errors: settings.getErrors('installationCode'),
+  autofocus: settings.installationCode is empty,
+}) }}
+
+{{ forms.lightswitchField({
+  label: 'Wait for my consent manager'|t('hazelchat'),
+  instructions: 'The chat starts only after your consent manager allows it. [How to connect a consent manager](https://hazelchat.co/integrations/craft-cms/#consent)'|t('hazelchat'),
+  id: 'waitForConsent',
+  name: 'waitForConsent',
+  on: settings.waitForConsent,
+}) }}
+
+{% if sites|length > 1 %}
+  <details class="hazelchat-sites">
+    <summary>{{ 'More'|t('hazelchat') }}</summary>
+    <p>{{ 'Every site uses the code above. Switch the chat off for a site, or give it its own code.'|t('hazelchat') }}</p>
+    {% for site in sites %}
+      {% set own = settings.sites[site.uid] ?? {} %}
+      <fieldset>
+        <legend><strong>{{ site.name|t('site') }}</strong> <span class="light">{{ site.baseUrl }}</span></legend>
+        {{ forms.lightswitchField({
+          label: 'Show the chat on this site'|t('hazelchat'),
+          id: 'sites-' ~ site.id ~ '-enabled',
+          name: 'sites[' ~ site.uid ~ '][enabled]',
+          on: own.enabled ?? true,
+        }) }}
+        {{ forms.autosuggestField({
+          label: 'Own installation code'|t('hazelchat'),
+          id: 'sites-' ~ site.id ~ '-code',
+          name: 'sites[' ~ site.uid ~ '][code]',
+          value: own.code ?? '',
+          placeholder: 'Uses the code above'|t('hazelchat'),
+        }) }}
+      </fieldset>
+    {% endfor %}
+    {% if settings.getErrors('sites') %}
+      {{ forms.errorList(settings.getErrors('sites')) }}
+    {% endif %}
+  </details>
+{% endif %}
+
+<p class="light">
+  {{ 'Visitors’ browsers load the chat from app.hazelchat.co, and Hazelchat processes what they type into it.'|t('hazelchat') }}
+  <a href="{{ 'https://hazelchat.co/privacy/'|t('hazelchat') }}" target="_blank" rel="noopener noreferrer">{{ 'Privacy notice'|t('hazelchat') }}</a>
+  · <a href="{{ 'https://hazelchat.co/terms/'|t('hazelchat') }}" target="_blank" rel="noopener noreferrer">{{ 'Terms'|t('hazelchat') }}</a>
+</p>

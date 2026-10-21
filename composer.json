@@ -1,0 +1,71 @@
+{
+	"name": "hazelchat/craft-hazelchat",
+	"description": "Adds the Hazelchat AI chat agent to Craft sites from one pasted installation code. It answers visitors from the pages you approve and passes on their enquiries. Needs a Hazelchat account; the Free plan covers one website.",
+	"type": "craft-plugin",
+	"keywords": [
+		"craft",
+		"cms",
+		"craftcms",
+		"craft-plugin",
+		"chat",
+		"ai",
+		"chat agent",
+		"chatbot",
+		"enquiries",
+		"lead capture",
+		"consent"
+	],
+	"homepage": "https://hazelchat.co/integrations/craft-cms/",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Hazelchat",
+			"email": "hello@hazelchat.co",
+			"homepage": "https://hazelchat.co"
+		}
+	],
+	"support": {
+		"email": "hello@hazelchat.co",
+		"docs": "https://hazelchat.co/integrations/craft-cms/",
+		"issues": "https://github.com/hazelchat-co/craft-hazelchat/issues",
+		"source": "https://github.com/hazelchat-co/craft-hazelchat"
+	},
+	"require": {
+		"php": ">=8.2",
+		"craftcms/cms": "^5.0.0"
+	},
+	"require-dev": {
+		"craftcms/ecs": "dev-main",
+		"craftcms/phpstan": "dev-main",
+		"phpstan/phpstan": "^1.12"
+	},
+	"minimum-stability": "dev",
+	"prefer-stable": true,
+	"autoload": {
+		"psr-4": {
+			"hazelchat\\craft\\": "src/"
+		}
+	},
+	"extra": {
+		"handle": "hazelchat",
+		"name": "Hazelchat",
+		"developer": "Hazelchat",
+		"documentationUrl": "https://hazelchat.co/integrations/craft-cms/",
+		"class": "hazelchat\\craft\\Plugin"
+	},
+	"scripts": {
+		"check-cs": "ecs check --ansi",
+		"fix-cs": "ecs check --ansi --fix",
+		"phpstan": "phpstan --memory-limit=1G"
+	},
+	"config": {
+		"sort-packages": true,
+		"platform": {
+			"php": "8.2"
+		},
+		"allow-plugins": {
+			"yiisoft/yii2-composer": true,
+			"craftcms/plugin-installer": true
+		}
+	}
+}
