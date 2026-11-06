@@ -31,7 +31,8 @@ The settings live in the project config like every plugin's. Instead of the code
   `<script id="hazelchat-craft" src="https://app.hazelchat.co/widget.js" data-agent="<key>" defer></script>`
   Your layout needs the `</body>` tag (Craft adds the scripts there).
 - **Installation code** takes the pasted code, just its 64-character key, or an environment variable. Only the key is saved, and only a valid key ever reaches a page; anything else prints nothing.
-- **Wait for my consent manager** (off) adds `data-require-consent="true"`: the chat starts only once your consent manager allows it. See [Visitor consent](https://hazelchat.co/integrations/craft-cms/#consent).
+- **Wait for my consent manager** (off) adds `data-require-consent="true"`: the chat starts only once your consent manager allows it. Only the chat waits: browsers still download `widget.js` from `app.hazelchat.co` straight away, so the visitor's IP address reaches Hazelchat before they agree. This is by design. If your site must prevent that too, use a consent tool that can block the script itself. See [Visitor consent](https://hazelchat.co/integrations/craft-cms/#consent).
+- The script tag carries the id `hazelchat-craft`. When Hazelchat checks your website, it reads this id to record that the chat was installed with this plugin, and it counts the plugin's installations that way.
 - **More** (with more than one site): every site uses the main code; switch the chat off for a site, or give it its own code.
 - Nothing in the control panel, in previews, on action requests or in the console. No database tables, no requests from Craft to Hazelchat, no telemetry.
 
@@ -41,7 +42,7 @@ Uninstall the plugin under **Settings → Plugins**, or clear the installation c
 
 ## Deutsch
 
-Hazelchat fügt Ihren KI-Chat-Agenten mit einem einzigen Installationscode in Ihre Craft-Site ein (Craft CMS 5). Installieren Sie das Plugin aus dem Plug-in-Store oder mit `composer require hazelchat/craft-hazelchat` und `php craft plugin/install hazelchat`, fügen Sie unter **Einstellungen → Plug-ins → Hazelchat** den Code aus Hazelchat ein (oder eine Umgebungsvariable wie `$HAZELCHAT_KEY`) und speichern Sie. Die Browser Ihrer Besucher laden den Chat von `app.hazelchat.co`; deren Fragen und Anfragedaten verarbeitet Hazelchat. Sie brauchen ein Hazelchat-Konto; der Free-Tarif gilt für eine Website und bleibt kostenlos.
+Hazelchat fügt Ihren KI-Chat-Agenten mit einem einzigen Installationscode in Ihre Craft-Site ein (Craft CMS 5). Installieren Sie das Plugin aus dem Plug-in-Store oder mit `composer require hazelchat/craft-hazelchat` und `php craft plugin/install hazelchat`, fügen Sie unter **Einstellungen → Plug-ins → Hazelchat** den Code aus Hazelchat ein (oder eine Umgebungsvariable wie `$HAZELCHAT_KEY`) und speichern Sie. Die Browser Ihrer Besucher laden den Chat von `app.hazelchat.co`; deren Fragen und Anfragedaten verarbeitet Hazelchat. Wartet der Chat auf Ihren Consent-Manager, lädt der Browser `widget.js` trotzdem sofort, und die IP-Adresse des Besuchers erreicht Hazelchat schon vor der Einwilligung; nur der Chat wartet. Über die ID `hazelchat-craft` im Skript-Tag zählt Hazelchat die Installationen dieses Plugins. Sie brauchen ein Hazelchat-Konto; der Free-Tarif gilt für eine Website und bleibt kostenlos.
 
 ## Licence
 
